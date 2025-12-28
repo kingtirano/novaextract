@@ -1,5 +1,5 @@
 name: nova_extract_app
-description: "A new Flutter project."
+description: "NovaExtract - A powerful and intuitive file extraction and compression tool. Extract and compress files in multiple formats (ZIP, TAR, TAR.GZ, TAR.BZ2, GZ, BZ2) with a beautiful and modern interface. Developed by Artur Martins - Tirano Tech."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -61,6 +61,7 @@ dev_dependencies:
   test: ^1.26.2
   mockito: ^5.5.0
   build_runner: ^2.7.1
+  flutter_launcher_icons: ^0.14.4
   
 
 # For information on the generic Dart part of this file, see the
@@ -104,3 +105,20 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+# Flutter Launcher Icons configuration
+flutter_launcher_icons:
+  android: true
+  ios: true
+  macos: true
+  image_path: "assets/images/app_icon.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  web:
+    generate: true
+    image_path: "assets/images/app_icon.png"
+    background_color: "#ffffff"
+    theme_color: "#1AA0A8"
+  windows:
+    generate: true
+    image_path: "assets/images/app_icon.png"
+    icon_size: 48 # min:48, max:256, default: 48

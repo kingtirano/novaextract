@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,6 +19,7 @@ void main() async {
   if (Platform.isAndroid || Platform.isIOS) {
     await MobileAds.instance.initialize();
   }
+  
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -32,6 +34,13 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
+// Variável global para armazenar caminhos do serviço do macOS
+List<String>? _pendingServicePaths;
+
+// Funções para acessar a variável global
+List<String>? getPendingServicePaths() => _pendingServicePaths;
+void clearPendingServicePaths() => _pendingServicePaths = null;
+
 class _MyAppState extends State<MyApp> {
   Locale? _locale;
   Brightness _brightness = Brightness.dark;
@@ -40,6 +49,24 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     _loadPreferences();
+    _setupServiceChannel();
+  }
+  
+  void _setupServiceChannel() {
+    if (Platform.isMacOS) {
+      const MethodChannel channel = MethodChannel('com.tiranotech.novaextract/services');
+      channel.setMethodCallHandler((call) async {
+        if (call.method == 'handleService') {
+          final args = call.arguments as Map<dynamic, dynamic>?;
+          final paths = args?['paths'] as List<dynamic>?;
+          if (paths != null) {
+            // Armazenar os caminhos no provider usando um callback após o build
+            // Armazenar os caminhos na variável global
+            _pendingServicePaths = paths.cast<String>();
+          }
+        }
+      });
+    }
   }
 
   Future<void> _loadPreferences() async {

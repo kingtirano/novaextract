@@ -273,9 +273,6 @@ class _CompressViewState extends State<CompressView> {
           final tarData = tarEncoder.encode(archive);
           final bzip2Encoder = BZip2Encoder();
           final bzip2Data = bzip2Encoder.encode(tarData);
-          if (bzip2Data == null) {
-            throw Exception('Failed to encode BZIP2 file');
-          }
           archiveData = bzip2Data;
           fileExtension = 'tar.bz2';
           break;

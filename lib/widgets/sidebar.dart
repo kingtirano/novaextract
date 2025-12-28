@@ -79,15 +79,6 @@ class GlassSidebar extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 GestureDetector(
-                  onTap: () => onViewChanged(2),
-                  child: SidebarItem(
-                    icon: CupertinoIcons.settings,
-                    label: loc.t('settings'),
-                    selected: currentView == 2,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                GestureDetector(
                   onTap: () => onViewChanged(3),
                   child: SidebarItem(
                     icon: CupertinoIcons.archivebox,
@@ -95,6 +86,16 @@ class GlassSidebar extends StatelessWidget {
                     selected: currentView == 3,
                   ),
                 ),
+                const SizedBox(height: 8),
+                GestureDetector(
+                  onTap: () => onViewChanged(2),
+                  child: SidebarItem(
+                    icon: CupertinoIcons.settings,
+                    label: loc.t('settings'),
+                    selected: currentView == 2,
+                  ),
+                ),
+                
                 const Spacer(),
                 const AdBanner(),
               ],

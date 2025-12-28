@@ -6,6 +6,14 @@
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleGetInfoString</key>
+	<string>NovaExtract - Extract and compress files with ease. Developed by Artur Martins - Tirano Tech.
+
+Supported formats for extraction:
+• ZIP, TAR, TAR.GZ, TAR.BZ2, GZ, BZ2
+
+Supported formats for compression:
+• ZIP, TAR, TAR.GZ, TAR.BZ2</string>
 	<key>CFBundleIconFile</key>
 	<string></string>
 	<key>CFBundleIdentifier</key>
@@ -13,7 +21,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>$(PRODUCT_NAME)</string>
+	<string>Nova Extract</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -22,11 +30,94 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
+	<key>NSHighResolutionCapable</key>
+	<true/>
 	<key>NSHumanReadableCopyright</key>
-	<string>$(PRODUCT_COPYRIGHT)</string>
+	<string>Artur Martins - Tirano Tech</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>NSServices</key>
+	<array>
+		<dict>
+			<key>NSMenuItem</key>
+			<dict>
+				<key>default</key>
+				<string>Extract with NovaExtract</string>
+			</dict>
+			<key>NSMessage</key>
+			<string>extractFiles</string>
+			<key>NSPortName</key>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+			<key>NSRequiredContext</key>
+			<dict>
+				<key>NSApplicationIdentifier</key>
+				<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+			</dict>
+			<key>NSSendFileTypes</key>
+			<array>
+				<string>public.zip-archive</string>
+				<string>public.tar-archive</string>
+				<string>com.apple.binhex-archive</string>
+				<string>com.apple.macbinary-archive</string>
+				<string>public.data</string>
+			</array>
+			<key>NSUserData</key>
+			<string>extract</string>
+		</dict>
+		<dict>
+			<key>NSMenuItem</key>
+			<dict>
+				<key>default</key>
+				<string>Compress with NovaExtract</string>
+			</dict>
+			<key>NSMessage</key>
+			<string>compressFiles</string>
+			<key>NSPortName</key>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+			<key>NSRequiredContext</key>
+			<dict>
+				<key>NSApplicationIdentifier</key>
+				<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+			</dict>
+			<key>NSSendFileTypes</key>
+			<array>
+				<string>public.item</string>
+				<string>public.folder</string>
+			</array>
+			<key>NSUserData</key>
+			<string>compress</string>
+		</dict>
+	</array>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>zip</string>
+				<string>tar</string>
+				<string>gz</string>
+				<string>bz2</string>
+				<string>tgz</string>
+				<string>tbz</string>
+				<string>tbz2</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string></string>
+			<key>CFBundleTypeName</key>
+			<string>Archive File</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>public.zip-archive</string>
+				<string>public.tar-archive</string>
+				<string>public.data</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

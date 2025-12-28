@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // Core
 import '../core/localizations.dart';
+import '../main.dart' show getPendingServicePaths, clearPendingServicePaths;
 
 // Models
 import '../models/extraction_history.dart';
@@ -51,6 +52,44 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   void initState() {
     super.initState();
     _loadHistory();
+    // Observar caminhos do serviço do macOS
+    if (Platform.isMacOS) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _checkServicePaths();
+      });
+    }
+  }
+  
+  void _checkServicePaths() {
+    // Verificar se há caminhos pendentes do serviço
+    final paths = getPendingServicePaths();
+    if (paths != null && paths.isNotEmpty) {
+      clearPendingServicePaths();
+      _handleServiceFiles(paths);
+    }
+  }
+  
+  void _handleServiceFiles(List<String> paths) {
+    final files = paths.map((path) {
+      try {
+        final file = File(path);
+        if (file.existsSync()) {
+          return PlatformFile(
+            path: path,
+            name: path.split(Platform.pathSeparator).last,
+            size: file.lengthSync(),
+          );
+        }
+      } catch (e) {
+        if (kDebugMode) debugPrint('Error processing service file $path: $e');
+      }
+      return null;
+    }).whereType<PlatformFile>().toList();
+    
+    if (files.isNotEmpty && mounted) {
+      final loc = AppLocalizations.of(context);
+      _validateAndSetFiles(files, context, loc);
+    }
   }
 
   Future<void> _loadHistory() async {
